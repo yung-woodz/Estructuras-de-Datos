@@ -15,13 +15,13 @@ typedef struct{
 }NODO;
 
 NODO *creaArbol(NODO *r);
-NODO *insertar(NODO *r, int valor);
+NODO *insertar(NODO* r, int nro_reserva, char nombre, char destino);
 
 int main (){
 
     int op;
+
     NODO *raiz, *R=NULL;
-    raiz=creaArbol(R);
 
     do{
 
@@ -41,6 +41,38 @@ int main (){
 
         }while(op < 1 || op > 6);
 
+
+        switch (op) {
+            case 1:
+
+                raiz=creaArbol(R);
+
+            break;
+
+            case 2:
+
+                
+
+            break;
+
+            case 3:
+
+                
+
+            break;
+
+            case 5:
+
+                
+
+            break;
+            case 6:
+
+                
+
+            break;
+            
+        }
         
 
         printf("\n");
@@ -53,30 +85,43 @@ int main (){
 
 NODO* creaArbol(NODO* r) {
 
-    if (r == NULL) {
-        r = (NODO*)malloc(sizeof(NODO));
-        r->nro_reserva = 54; // Mediana del intervalo [10,98]
-        strcpy(r->nombre, "");
-        r->izq = NULL;
-        r->der = NULL;
-    }
+    int nro_reserva;
+    char nombre[20];
+    char destino[20];
+
+    printf("Ingrese el número de reserva: ");
+    scanf("%d", &nro_reserva);
+    fflush(stdin);
+
+    printf("Ingrese el nombre: ");
+    fgets(nombre, sizeof(nombre), stdin);
+    nombre[strcspn(nombre, "\n")] = '\0'; // Elimina el salto de línea de fgets
+
+    printf("Ingrese el destino: ");
+    fgets(destino, sizeof(destino), stdin);
+    destino[strcspn(destino, "\n")] = '\0'; // Elimina el salto de línea de fgets
+
+    r = insertar(r, nro_reserva, nombre, destino);
 
     return r;
 }
 
-NODO *insertar(NODO *r, int valor){ // acá el valor será generado aleatoriamente
+NODO *insertar(NODO* r, int nro_reserva, char nombre, char destino){
 
     if (r == NULL) {
         r = (NODO*)malloc(sizeof(NODO));
-        r->nro_reserva = valor;
+        r->nro_reserva = nro_reserva;
+        strcpy(r->nombre, nombre);
+        strcpy(r->destino, destino);
         r->izq = NULL;
         r->der = NULL;
-    } else if (valor < r->nro_reserva) {
-        r->izq = insertar(r->izq, valor); // Insertar en el subárbol izquierdo
+    } else if (nro_reserva < r->nro_reserva) {
+        r->izq = insertar(r->izq, nro_reserva, nombre, destino); // Insertar en el subárbol izquierdo
     } else {
-        r->der = insertar(r->der, valor); // Insertar en el subárbol derecho
+        r->der = insertar(r->der, nro_reserva, nombre, destino); // Insertar en el subárbol derecho
     }
 
+    
     return r;
 
 }
